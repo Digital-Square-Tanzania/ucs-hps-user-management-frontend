@@ -11,7 +11,7 @@ const isAuthenticated = computed(() => auth.isAuthenticated)
 </script>
 
 <template>
-  <main class="flex-grow">
+  <main class="h-[97vh] lg:h-1/1 lg:flex-grow md:h-screen">
     <LoginView v-if="!isAuthenticated" msg="Please login first" />
     <DashboardView v-else />
   </main>
@@ -26,10 +26,3 @@ const isAuthenticated = computed(() => auth.isAuthenticated)
 
 
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-</style>

@@ -1,7 +1,7 @@
 <template>
-  <div v-if="authStore.loading"
+  <div v-if="authStore.loading" id="transparent-cover"
     class="fixed inset-0 bg-white dark:bg-black opacity-80 flex items-center justify-center z-49">
-    <div class="text-black dark:text-white flex flex-col items-center justify-center">
+    <div id="cog-container" class="text-black dark:text-white flex flex-col items-center justify-center">
       <SettingsCog class="animate-spin [animation-duration:2.4s]" />
     </div>
   </div>
