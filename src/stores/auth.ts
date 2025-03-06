@@ -27,13 +27,8 @@ export const useAuthStore = defineStore('auth', {
         this.accessToken = response.data.data.accessToken
         this.refreshToken = response.data.data.refreshToken
 
-        // Save tokens to localStorage
-        if (this.accessToken) {
-          localStorage.setItem('accessToken', this.accessToken)
-        }
-        if (this.refreshToken) {
-          localStorage.setItem('refreshToken', this.refreshToken)
-        }
+        if (this.accessToken) localStorage.setItem('accessToken', this.accessToken)
+        if (this.refreshToken) localStorage.setItem('refreshToken', this.refreshToken)
       } catch (error: unknown) {
         const axiosError = error as AxiosError<{ message?: string }>
         this.error = axiosError.response?.data?.message || axiosError.message || 'Login failed'
@@ -44,10 +39,6 @@ export const useAuthStore = defineStore('auth', {
       } finally {
         this.loading = false
       }
-    },
-    clearTokens() {
-      this.accessToken = null
-      this.refreshToken = null
     },
     async logout() {
       this.loading = true
@@ -71,6 +62,10 @@ export const useAuthStore = defineStore('auth', {
         localStorage.removeItem('refreshToken')
         this.loading = false
       }
+    },
+    clearTokens() {
+      this.accessToken = null
+      this.refreshToken = null
     },
   },
   getters: {
