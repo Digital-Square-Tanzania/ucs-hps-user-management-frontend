@@ -1,10 +1,10 @@
 <template>
-  <div
-    class="login-box lg:flex flex-row bg-white dark:bg-gray-800 shadow-lg lg:rounded-lg lg:m-20 lg:h-[75vh] md:h-[100vh] h-[100vh] lg:min-h-150 lg:min-w-200">
-    <div id="box-left" class="lg:w-1/2 md:w-full lg:flex flex-col md:h-[90vh]">
-      <div id="left-top" class="box-border h-1/20">
+  <div id="login-box"
+    class="flex lg:flex flex-row bg-white dark:bg-gray-800 shadow-lg lg:rounded-lg lg:m-20 lg:h-[75vh] md:h-[100vh] h-[100vh] lg:min-h-180 lg:min-w-200">
+    <div id="box-left" class="flex lg:w-1/2 md:w-full lg:flex flex-col md:h-[90vh]">
+      <!-- <div id="left-top" class="box-border h-1/20">
         <AppHeading color="ucs" />
-      </div>
+      </div> -->
 
       <div id="left-bottom" class="box-border lg:h-3/4 sm:h-[90vh] flex flex-row justify-center">
         <div id="bottom-form" class="lg:w-3/5 md:w-4/5 flex flex-col justify-center">
@@ -47,22 +47,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import { useAlertStore } from '@/stores/alert'
-import AppHeading from '@/components/ui/AppHeading.vue'
-
-defineProps<{ msg: string }>()
+import { useToast } from 'primevue/usetoast'
 
 const email = ref('')
 const password = ref('')
 const auth = useAuthStore()
-const alert = useAlertStore()
+const router = useRouter()
+const toast = useToast()
+
+// Redirect if already logged in
+onMounted(() => {
+  if (auth.isAuthenticated) {
+    router.push('/dashboard');
+  }
+});
 
 const handleLogin = async () => {
-  await auth.login(email.value, password.value)
-  if (auth.error) {
-    alert.showAlert('danger', 'Error', auth.error)
+  await auth.login(email.value, password.value, toast)
+  if (auth.isAuthenticated) {
+    router.push('/dashboard')
+  } else if (auth.error) {
+    console.log('danger', 'Error', auth.error)
   }
 }
+
 </script>

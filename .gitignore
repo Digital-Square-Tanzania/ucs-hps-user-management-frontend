@@ -42,3 +42,5 @@ Thumbs.db
 .history
 node_modules
 **/*.backup
+.vscode
+oldversion
