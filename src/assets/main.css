@@ -1,2 +1,15 @@
 @import "tailwindcss";
-/* @import "./base.css"; */
+
+@theme {
+  --color-ucs-950: oklch(15.52% 0.0227 229.79);
+  --color-ucs-900: oklch(21.53% 0.0345 234.12);
+  --color-ucs-800: oklch(32.39% 0.0612 236.91);
+  --color-ucs-700: oklch(42.39% 0.0835 237.47);
+  --color-ucs-600: oklch(51.88% 0.1057 238.24);
+  --color-ucs-500: oklch(60.92% 0.1255 238.38);
+  --color-ucs-400: oklch(64.57% 0.1167 235.9);
+  --color-ucs-300: oklch(72.05% 0.0938 232.81);
+  --color-ucs-200: oklch(79.88% 0.0687 231.27);
+  --color-ucs-100: oklch(87.9% 0.042 230.25);
+  --color-ucs-50: oklch(96.04% 0.0135 226.56);
+}

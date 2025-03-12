@@ -1,37 +1,33 @@
-# 🌐 HPS User Management Frontend
+# .
 
-A modern, responsive frontend application for managing DHIS2 and OpenMRS users. Built with:
+This template should help get you started developing with Vue 3 in Vite.
 
-- ⚡ **Vue 3**
-- 🛠️ **TypeScript**
-- 🎨 **Tailwind CSS**
+## Recommended IDE Setup
 
-## 🚀 Features
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-- Login with backend authentication
-- Dashboard with quick access to user stats
-- Manage users: List, create, and delete users
-- Connects to **HPS User Management Backend**
-- Beautiful, clean, and responsive UI inspired by **Pinterest**
+## Type Support for `.vue` Imports in TS
 
-## 🏗️ Tech Stack
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
 
-- Vue 3 (Composition API)
-- TypeScript
-- Tailwind CSS
-- Pinia (optional state management)
-- Axios (for API requests)
+## Customize configuration
 
-## ⚙️ Installation
+See [Vite Configuration Reference](https://vite.dev/config/).
 
-```bash
-# Clone the repository
-git clone https://github.com/your-username/hps-user-management-frontend.git
-cd hps-user-management-frontend
+## Project Setup
 
-# Install dependencies
+```sh
 npm install
+```
 
-# Run the app
+### Compile and Hot-Reload for Development
+
+```sh
 npm run dev
+```
+
+### Type-Check, Compile and Minify for Production
+
+```sh
+npm run build
 ```
