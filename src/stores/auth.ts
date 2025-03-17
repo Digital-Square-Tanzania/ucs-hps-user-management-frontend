@@ -1,27 +1,44 @@
 import { defineStore } from 'pinia'
 import axios, { AxiosError } from 'axios'
 import { useRouter } from 'vue-router'
-import { useToast } from 'primevue/usetoast' // Import PrimeVue Toast
+import { useToast } from 'primevue/usetoast'
+import ApiClient from '@/utilities/ApiClient'
 
 const API_URL = import.meta.env.VITE_API_URL
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    accessToken: localStorage.getItem('accessToken') || '', // ✅ Ensures reactivity
+    accessToken: localStorage.getItem('accessToken') || '',
     refreshToken: localStorage.getItem('refreshToken') || '',
     loading: false,
     error: '' as string | null,
   }),
+  getters: {
+    isAuthenticated: (state) => !!state.accessToken,
+    apiClient: (state) => new ApiClient(state.accessToken),
+  },
   actions: {
     hydrate() {
       this.accessToken = localStorage.getItem('accessToken') || ''
       this.refreshToken = localStorage.getItem('refreshToken') || ''
     },
+
     async login(email: string, password: string, toast: ReturnType<typeof useToast>) {
       this.loading = true
       this.error = null
       try {
-        const response = await axios.post(`${API_URL}/auth/login`, { email, password })
+        interface LoginResponse {
+          status: string
+          message?: string
+          data: {
+            accessToken: string
+            refreshToken: string
+          }
+        }
+        const response = await this.apiClient.post<LoginResponse>(`${API_URL}/auth/login`, {
+          email,
+          password,
+        })
 
         if (response.data.status !== 'success') {
           throw new Error(response.data.message || 'Login failed')
@@ -56,19 +73,12 @@ export const useAuthStore = defineStore('auth', {
         this.loading = false
       }
     },
+
     async logout(router: ReturnType<typeof useRouter>, toast: ReturnType<typeof useToast>) {
       this.loading = true
       this.error = null
       try {
-        await axios.post(
-          `${API_URL}/auth/logout`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${this.accessToken}`,
-            },
-          },
-        )
+        await this.apiClient.post(`${API_URL}/auth/logout`, {})
       } catch (error: unknown) {
         const axiosError = error as AxiosError<{ message?: string }>
         this.error = axiosError.response?.data?.message || axiosError.message || 'Logout failed'
@@ -86,14 +96,12 @@ export const useAuthStore = defineStore('auth', {
         })
       }
     },
+
     clearTokens() {
       this.accessToken = '' // ✅ Use empty string to ensure reactivity
       this.refreshToken = ''
       localStorage.removeItem('accessToken')
       localStorage.removeItem('refreshToken')
     },
-  },
-  getters: {
-    isAuthenticated: (state) => !!state.accessToken, // ✅ Now updates reactively
   },
 })
