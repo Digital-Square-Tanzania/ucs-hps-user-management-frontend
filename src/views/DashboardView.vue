@@ -26,7 +26,6 @@
       </InfoCard>
       <InfoCard color="green">
         <template #heading>All Villages</template>
-        <!-- <template #bigi-number>{{ dashboardData?.villages ?? 'Loading...' }}</template> -->
         <template #big-number>{{ dashboardData ? formatNumber(dashboardData.villages) : 'Loading...' }}</template>
         <template #percent>-32</template>
         <template #subtext>Last Sync: Mar 01, 2025</template>
@@ -83,7 +82,7 @@ import IconUsers from '@/components/icons/IconUsers.vue'
 import IconUserGear from '@/components/icons/IconUserGear.vue'
 import IconVillage from '@/components/icons/IconVillage.vue'
 import IconHospital from '@/components/icons/IconHospital.vue'
-import BarchartYear from '@/components/charts/BarchartYear.vue'
+// import BarchartYear from '@/components/charts/BarchartYear.vue'
 import DonutChart from '@/components/charts/DonutChart.vue'
 import LastUsersTable from '@/components/tables/LastusersTable.vue'
 import PageTitle from '@/components/layout/PageTitle.vue'
@@ -91,7 +90,6 @@ import { onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import ApiClient from '@/utilities/ApiClient'
 
-import axios from 'axios'
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useToast } from 'primevue/usetoast'
@@ -136,19 +134,10 @@ onMounted(async () => {
   try {
     const accessToken = authStore.accessToken
 
-    // const response = await axios.get(`${import.meta.env.VITE_API_URL}/dashboard/stats`, {
-    //   headers: {
-    //     Authorization: `Bearer ${accessToken}`,
-    //   },
-    // })
-
     const apiClient = new ApiClient(accessToken);
     const response = await apiClient.get<DashboardData>("/dashboard/stats");
 
-
-    // Set only the `data` property from the API response
     dashboardData.value = response.data.data
-    // Compute total team members
     const computedTotalTeamMembers = computed<number>(() => {
       if (!dashboardData.value?.teamMembersByZone) return 0
       return dashboardData.value.teamMembersByZone.reduce((sum: number, zone_name: { members_count: number }) => sum + zone_name.members_count, 0)

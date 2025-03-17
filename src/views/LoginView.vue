@@ -2,10 +2,6 @@
   <div id="login-box"
     class="flex lg:flex flex-row bg-white dark:bg-gray-800 shadow-lg lg:rounded-lg lg:m-20 lg:h-[75vh] md:h-[100vh] h-[100vh] lg:min-h-180 lg:min-w-200">
     <div id="box-left" class="flex lg:w-1/2 md:w-full lg:flex flex-col md:h-[90vh]">
-      <!-- <div id="left-top" class="box-border h-1/20">
-        <AppHeading color="ucs" />
-      </div> -->
-
       <div id="left-bottom" class="box-border lg:h-3/4 sm:h-[90vh] flex flex-row justify-center">
         <div id="bottom-form" class="lg:w-3/5 md:w-4/5 flex flex-col justify-center">
           <form @submit.prevent="handleLogin" class="w-full max-w-sm">
