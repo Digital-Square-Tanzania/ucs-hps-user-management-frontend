@@ -35,6 +35,7 @@
     'relative z-3 mt-0 lg:mt-20 box-border bg-white dark:bg-ucs-700 lg:rounded-xl shadow-md dark:shadow-lg lg:w-[85vw] md:w-[100vw] sm:w-[100vw] lg:min-h-[60vh] p-5': route.path !== '/login',
     'relative z-3 mt-0 lg:mt-0 box-border bg-transparent  lg:w-[80vw] md:w-[100vw] sm:w-[100vw] lg:min-h-[60vh] p-5': route.path === '/login'
   }">
+    <TransparentCover v-if="auth.loading" />
     <Toast />
     <RouterView />
   </main>
@@ -44,9 +45,10 @@
 import { useRouter, useRoute, RouterView } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useToast } from 'primevue/usetoast'
-import Toast from 'primevue/toast';
-import { watch } from 'vue';
-import MainLink from './components/layout/MainLink.vue';
+import Toast from 'primevue/toast'
+import { watch } from 'vue'
+import MainLink from './components/layout/MainLink.vue'
+import TransparentCover from './components/layout/TransparentCover.vue'
 
 const auth = useAuthStore()
 const router = useRouter()
