@@ -61,12 +61,12 @@ const getBoxColor = (count: number) => {
   // Normalize the count between 0 and 1
   const normalized = (count - minCount.value) / (maxCount.value - minCount.value)
 
-  if (normalized >= 0.9) return 'bg-ucs-800'
-  if (normalized >= 0.7) return 'bg-ucs-700'
-  if (normalized >= 0.5) return 'bg-ucs-600'
-  if (normalized >= 0.3) return 'bg-ucs-500'
-  if (normalized >= 0.1) return 'bg-ucs-400'
-  return 'bg-ucs-200'
+  if (normalized >= 0.9) return 'bg-ucs-600 dark:bg-ucs-800'
+  if (normalized >= 0.7) return 'bg-ucs-500 dark:bg-ucs-700'
+  if (normalized >= 0.5) return 'bg-ucs-400 dark:bg-ucs-600'
+  if (normalized >= 0.3) return 'bg-ucs-300 dark:bg-ucs-500'
+  if (normalized >= 0.1) return 'bg-ucs-200 dark:bg-ucs-400'
+  return 'bg-ucs-100 dark:bg-ucs-200'
 }
 </script>
 
