@@ -43,13 +43,14 @@ const chartOptions = {
   plugins: {
     legend: {
       display: true,
-      position: 'left',
+      position: 'left' as const,
       labels: {
         boxWidth: 12,
-        padding: 20,
+        padding: 10,
         color: '#cccccc',
         font: {
-          size: 14,
+          size: 12,
+          lineHeight: '0.5em',
         },
       },
     },
