@@ -1,5 +1,5 @@
 <template>
-  <PageTitle heading="Prime Users" subtext="Users Using PrimeVue" />
+  <PageTitle heading="UCS Users" subtext="Users Using UCS" />
   <div id="table-bg" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
     <!-- Filter buttons-->
     <div class="mb-4">

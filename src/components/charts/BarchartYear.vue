@@ -6,23 +6,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import {
-  Chart,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend,
-  Title,
-} from 'chart.js'
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
+import { Chart, BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title } from 'chart.js'
 
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title)
 
+const props = defineProps<{ userRegistrations: number[] }>()
 const chartRef = ref<HTMLCanvasElement | null>(null)
 let chartInstance: Chart | null = null
 
-// Generate last 12 months labels dynamically
 const getLast12Months = () => {
   const months = []
   const date = new Date()
@@ -33,8 +25,13 @@ const getLast12Months = () => {
   return months
 }
 
-// Example dummy data (replace this with backend data)
-const userRegistrations = [120, 140, 180, 200, 230, 250, 300, 280, 310, 350, 400, 420]
+// ✅ Watch for prop changes and update the chart
+watch(() => props.userRegistrations, (newData) => {
+  if (chartInstance && newData.length > 0) {
+    chartInstance.data.datasets[0].data = newData
+    chartInstance.update()
+  }
+}, { deep: true })
 
 onMounted(() => {
   if (chartRef.value) {
@@ -45,8 +42,8 @@ onMounted(() => {
         datasets: [
           {
             label: 'Users Registered',
-            data: userRegistrations,
-            backgroundColor: '#218cc5', // UCS blue
+            data: props.userRegistrations || [], // Use default empty array
+            backgroundColor: '#218cc5',
             borderRadius: 2,
             barThickness: 13,
           },
@@ -59,17 +56,14 @@ onMounted(() => {
           legend: {
             position: 'top',
             labels: {
-              color: '#4B5563', // text-gray-600
+              color: '#4B5563',
             },
           },
           title: {
             display: true,
             text: 'User Registrations (Last 12 Months)',
-            color: '#6a7282', // text-gray-500
-            font: {
-              size: 16,
-              weight: 'bold',
-            },
+            color: '#6a7282',
+            font: { size: 16, weight: 'bold' },
           },
           tooltip: {
             callbacks: {
